@@ -1,0 +1,137 @@
+{% extends 'frontend/base.html' %}
+{% load static %}
+
+{% block title %}Equipment{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h4><i class="bi bi-pc-display me-2 text-secondary"></i>Equipment</h4>
+    <button class="btn btn-primary btn-sm d-none" id="btn-add" data-bs-toggle="modal" data-bs-target="#modal-add">
+        <i class="bi bi-plus-lg me-1"></i>Add Equipment
+    </button>
+</div>
+
+<!-- Stats -->
+<div class="row g-3 mb-3">
+    <div class="col-6 col-lg-3"><div class="stat-card">
+        <div class="stat-value text-primary" id="stat-total">—</div>
+        <div class="stat-label">Total</div>
+    </div></div>
+    <div class="col-6 col-lg-3"><div class="stat-card">
+        <div class="stat-value" style="color:#166534" id="stat-in-use">—</div>
+        <div class="stat-label">In Use</div>
+    </div></div>
+    <div class="col-6 col-lg-3"><div class="stat-card">
+        <div class="stat-value" style="color:#713f12" id="stat-repair">—</div>
+        <div class="stat-label">In Repair</div>
+    </div></div>
+    <div class="col-6 col-lg-3"><div class="stat-card">
+        <div class="stat-value" style="color:#991b1b" id="stat-decomm">—</div>
+        <div class="stat-label">Decommissioned</div>
+    </div></div>
+</div>
+
+<!-- Filters -->
+<div class="filter-bar">
+    <input type="text" id="search" class="form-control" style="max-width:240px" placeholder="Search name, model, serial…">
+    <select id="filter-status" class="form-select" style="max-width:160px">
+        <option value="">All statuses</option>
+        <option value="in_use">In Use</option>
+        <option value="in_repair">In Repair</option>
+        <option value="decommissioned">Decommissioned</option>
+    </select>
+    <select id="filter-type" class="form-select" style="max-width:150px">
+        <option value="">All types</option>
+        <option value="computer">Computer</option>
+        <option value="laptop">Laptop</option>
+        <option value="server">Server</option>
+        <option value="other">Other</option>
+    </select>
+</div>
+
+<!-- Table -->
+<div class="card">
+    <div class="table-responsive">
+        <table class="table mb-0">
+            <thead>
+                <tr>
+                    <th>Name / Model</th>
+                    <th>Serial #</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Purchased</th>
+                    <th class="text-center">Components</th>
+                </tr>
+            </thead>
+            <tbody id="equipment-tbody">
+                <tr><td colspan="6" class="spinner-overlay">
+                    <div class="spinner-border spinner-border-sm text-secondary"></div>
+                </td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Add Equipment Modal -->
+<div class="modal fade" id="modal-add" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Equipment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="form-equipment">
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <label class="form-label">Name</label>
+                            <input name="name" class="form-control" required>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Model</label>
+                            <input name="model" class="form-control" required>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Serial Number</label>
+                            <input name="serial_number" class="form-control" required>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Type</label>
+                            <select name="type" class="form-select" required>
+                                <option value="computer">Computer</option>
+                                <option value="laptop">Laptop</option>
+                                <option value="server">Server</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Purchase Date</label>
+                            <input name="purchase_date" type="date" class="form-control" required>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Status</label>
+                            <select name="status" class="form-select">
+                                <option value="in_use">In Use</option>
+                                <option value="in_repair">In Repair</option>
+                                <option value="decommissioned">Decommissioned</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Purpose</label>
+                            <textarea name="purpose" class="form-control" rows="2"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'frontend/js/equipment.js' %}"></script>
+{% endblock %}
